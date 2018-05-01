@@ -1,0 +1,278 @@
+---
+title: "Conditionals and Control Flow"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+Relational Operators
+
+Equality: ==
+
+```{r}
+TRUE == TRUE
+
+TRUE == FALSE
+
+'hello' == 'goodbye'
+
+3 == 2
+```
+
+Inequality !=
+
+```{r}
+'hello' != 'goodbye'
+```
+< and >
+
+```{r}
+3 < 5
+3 > 5
+
+# Character and Logical
+'hello' > 'goodbye' # Alphabetical order!
+
+TRUE < FALSE        # TRUE = 1, FALSE = 0 
+
+```
+<= and >=
+```{r}
+5 >= 3
+
+3 >= 3
+```
+
+Relational Operators & Vectors
+- Will be done in element-wise
+
+```{r}
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+linkedin
+
+linkedin > 10
+
+facebook <- c(17, 7, 5, 16, 8, 13, 14)
+facebook
+
+facebook <= linkedin
+```
+
+
+Practice
+
+Equality
+```{r}
+# Logical
+TRUE == FALSE
+
+# Numeric
+-6 * 14 != 17 - 101
+
+# Charactor strings
+"useR" == "user"
+
+# A logical with a numeric
+TRUE == 1
+```
+Greater and less than
+```{r}
+# Comparison of numerics
+-6 * 5 + 2 >= -10 + 1
+
+# Comparison of character strings
+"raining" <= "raining dogs"
+
+# Comparison of logicals
+TRUE > FALSE
+```
+Compare vectors
+
+```{r}
+# The linkedin and facebook vectors have already been created for you
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+facebook <- c(17, 7, 5, 16, 8, 13, 14)
+
+# Popular days
+linkedin > 15
+
+# Quiet days
+linkedin <= 5
+
+# LinkedIn more popular than Facebook
+linkedin > facebook
+```
+Compare matrices
+
+```{r}
+# The social data has been created for you
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+facebook <- c(17, 7, 5, 16, 8, 13, 14)
+views <- matrix(c(linkedin, facebook), nrow = 2, byrow = TRUE)
+
+# When does views equal 13?
+views == 13
+
+# When is views less than or equal to 14?
+views <= 14
+```
+Logical Operators
+
+& and | (1)
+
+```{r}
+# The linkedin and last variable are already defined for you
+linkedin <- c(16, 9, 13, 5, 2, 17, 14)
+last <- tail(linkedin, 1)
+
+# Is last under 5 or above 10?
+last < 5 | last > 10
+
+# Is last between 15 (exclusive) and 20 (inclusive)?
+last > 15 & last < 20
+```
+
+& and | (2)
+
+```{r}
+# The social data (linkedin, facebook, views) has been created for you
+
+# linkedin exceeds 10 but facebook below 10
+linkedin > 10 & facebook < 10
+
+# When were one or both visited at least 12 times?
+linkedin >= 12 | facebook >= 12
+
+# When is views between 11 (exclusive) and 14 (inclusive)?
+views > 11 & views <= 14
+```
+
+Blend it all together
+
+```{r}
+# li_df is pre-loaded in your workspace
+
+# Select the second column, named day2, from li_df: second
+second <- li_df['day2']
+
+# Build a logical vector, TRUE if value in second is extreme: extremes
+extremes <- second > 25 | second < 5
+
+# Count the number of TRUEs in extremes
+sum(extremes)
+
+# Solve it with a one-liner
+sum(li_df['day2'] > 25 | li_df['day2'] < 5)
+```
+
+
+Conditional Statements
+
+if statement
+
+```{r}
+# Variables related to your last day of recordings
+medium <- "LinkedIn"
+num_views <- 14
+
+# Examine the if statement for medium
+if (medium == "LinkedIn") {
+  print("Showing LinkedIn information")
+}
+
+# Write the if statement for num_views
+if (num_views > 15) {
+  print("You're popular!")
+}
+
+
+```
+
+Add an else
+
+```{r}
+# Variables related to your last day of recordings
+medium <- "LinkedIn"
+num_views <- 14
+
+# Control structure for medium
+if (medium == "LinkedIn") {
+  print("Showing LinkedIn information")
+} else {
+  print("Unknown medium")
+}
+
+
+
+# Control structure for num_views
+if (num_views > 15) {
+  print("You're popular!")
+} else {
+  print("Try to be more visible!")
+}
+```
+
+Customize further: else if
+
+```{r}
+# Variables related to your last day of recordings
+medium <- "LinkedIn"
+num_views <- 14
+
+# Control structure for medium
+if (medium == "LinkedIn") {
+  print("Showing LinkedIn information")
+} else if (medium == "Facebook") {
+  # Add code to print correct string when condition is TRUE
+  print("Showing Facebook information")
+} else {
+  print("Unknown medium")
+}
+
+# Control structure for num_views
+if (num_views > 15) {
+  print("You're popular!")
+} else if (num_views <= 15 & num_views > 10) {
+  # Add code to print correct string when condition is TRUE
+  print("Your number of views is average")
+} else {
+  print("Try to be more visible!")
+}
+```
+
+Take control!
+
+    Finish the control-flow construct with the following behavior:
+
+    If both li and fb are 15 or higher, set sms equal to double the sum of li and fb.
+    If both li and fb are strictly below 10, set sms equal to half the sum of li and fb.
+    In all other cases, set sms equal to li + fb.
+    Finally, print the resulting sms variable to the console.
+
+```{r}
+# Variables related to your last day of recordings
+li <- 15
+fb <- 9
+
+# Code the control-flow construct
+if (li >= 15 & fb >= 15) {
+  sms <- 2 * (li + fb)
+} else if (li < 10 & fb < 10) {
+  sms <- 0.5 * (li + fb)
+} else {
+  sms <- li + fb
+}
+
+# Print the resulting sms to the console
+print(sms)
+```
+
+
+
+
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

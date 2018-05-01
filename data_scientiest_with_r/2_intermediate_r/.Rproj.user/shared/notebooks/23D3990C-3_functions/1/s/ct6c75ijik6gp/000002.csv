@@ -1,0 +1,8 @@
+"0","# Consult the documentation on the mean() function"
+"0","?mean"
+"0","# Inspect the arguments of the mean() function"
+"0","args(mean)"
+"1","function (x, ...) 
+"
+"1","NULL
+"

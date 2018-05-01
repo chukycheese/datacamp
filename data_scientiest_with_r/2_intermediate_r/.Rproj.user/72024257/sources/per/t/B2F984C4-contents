@@ -1,0 +1,192 @@
+---
+title: "Functions"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+## Using functions
+
+```{r}
+timestamps <- as.Date(c("2015-09-15 08:00:53 UTC", "2015-09-15 18:07:58 UTC",
+                         "2015-09-15 21:14:16 UTC", "2015-09-17 01:31:51 UTC",
+                         "2015-09-17 13:33:43 UTC", "2015-09-17 15:34:22 UTC",
+                         "2015-09-18 03:37:18 UTC"))
+
+# logs is available in your workspace
+
+# Call max() on timestamps
+max(timestamps)
+
+# What is the date of the latest timestamp?
+max(as.Date(timestamps))
+```
+
+## Optional Arguments
+
+```{r}
+timestamps <- c("2015-09-15 08:00:53 UTC", "2015-09-15 18:07:58 UTC",
+                         "2015-09-15 21:14:16 UTC", "2015-09-17 01:31:51 UTC",
+                         NA, "2015-09-17 15:34:22 UTC",
+                         "2015-09-18 03:37:18 UTC")
+
+# A faulty version of timestamps is available in your workspace
+
+# Print out timestamps
+timestamps
+
+# Call max() on timestamps, no additional arguments
+max(timestamps)
+
+# Call max() on timestamps, specify na.rm
+max(timestamps, na.rm = TRUE)
+```
+
+## Extract log information (1)
+
+```{r}
+# logs is available in your workspace
+
+# for loop to extract timestamp; put this inside function body below
+info <- c()
+for (log in logs) {
+ info <- c(info, log$timestamp)
+}
+
+# Build a function extract_info(): use for loop, add return statement
+extract_info <- function(x) {
+  # body
+  info <- c()
+  for (element in x){
+    info <- c(info, element$timestamp)
+  }
+  return (info)
+}
+
+# Call extract_info() on logs
+extract_info(logs)
+```
+
+## Extract log information (2)
+
+```{r}
+# logs is available in your workspace
+
+# Adapt the extract_info() function.
+extract_info <- function(x, property) {
+  info <- c()
+  for (log in x) {
+   info <- c(info, log[[property]])
+  }
+  return(info)
+}
+
+# Call extract_info() on logs, set property to "timestamp"
+extract_info(logs, "timestamp")
+
+# Call extract_info() on logs, set property to "success"
+extract_info(logs, "success")
+```
+
+## Extract log information (3)
+
+```{r}
+# logs is available in your workspace
+
+# Add default value for property argument
+extract_info <- function(x, property = "success") {
+  info <- c()
+  for (log in x) {
+   info <- c(info, log[[property]])
+  }
+  return(info)
+}
+
+# Call extract_info() on logs, don't specify property
+extract_info(logs)
+
+# Call extract_info() on logs, set property to "timestamp"
+extract_info(logs, "timestamp")
+```
+
+## Extract log information (4)
+
+```{r}
+# logs is available in your workspace
+
+# Adapt extract_info():
+# - add argument with default value
+# - change function body
+extract_info <- function(x, property = "success", include_all = TRUE) {
+  info <- c()
+  for (log in x) {
+
+   # add if construct around the line below
+   if(include_all || !log$success){
+     info <- c(info, log[[property]])  
+   }
+  
+  }
+  return(info)
+}
+
+# Call extract_info() on logs, no additional arguments
+extract_info(logs)
+
+# Call extract_info() on logs, set include_all to FALSE
+extract_info(logs, include_all = FALSE)
+```
+
+## Extract log information (5)
+
+```{r}
+# logs is available in your workspace
+
+# Defition of the extract_info() function
+extract_info <- function(x, property = "success", include_all = TRUE) {
+  info <- c()
+  for (log in x) {
+    if (include_all || !log$success) {
+     info <- c(info, log[[property]])
+    }
+  }
+  return(info)
+}
+
+# Generate vector of messages
+extract_info(logs, property = c("details", "message"))
+
+# Generate vector of locations for failed log entries
+extract_info(logs, property = c("details", "location"), include_all = FALSE)
+```
+
+## Over to you
+
+```{r}
+# logs is available in your workspace
+
+# Write the function compute_fail_pct
+compute_fail_pct <- function(list){
+  total <- length(list)
+  failure <- 0
+  for (item in list){
+    if (item$success == FALSE){
+      failure <- failure + 1
+    }
+  }
+  return (failure / total * 100)
+}
+
+
+# Call compute_fail_pct on logs
+compute_fail_pct(logs)
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

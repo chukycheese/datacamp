@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1516633066385.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1549784694",
+    "id" : "DEF1F05F",
+    "lastKnownWriteTime" : 1516718444,
+    "last_content_update" : 1516718444752,
+    "path" : "C:/Dev/R/data_scientiest_with_r/intermediate_r_practice/5_utilities.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "147,0",
+        "scrollLine" : "102",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

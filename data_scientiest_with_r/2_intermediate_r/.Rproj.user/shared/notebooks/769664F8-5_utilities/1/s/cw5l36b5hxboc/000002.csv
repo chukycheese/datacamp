@@ -1,0 +1,8 @@
+"0","# The errors vector has already been defined for you"
+"0","errors <- c(1.9, -2.6, 4.0, -9.5, -3.4, 7.3)"
+"0","# Sum of absolute rounded values of errors"
+"0","sum(abs(round(errors)))"
+"1","[1]"
+"1"," 29"
+"1","
+"

@@ -1,0 +1,294 @@
+---
+title: "5_utilities"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+# Useful Functions
+
+## Mathematical utilities
+* abs(): Calculate the absolute value.
+* sum(): Calculate the sum of all the values in a data structure.
+* mean(): Calculate the arithmetic mean.
+* round(): Round the values to 0 decimal places by default. Try out ?round in the console for variations of round() and ways to change the number of digits to round to.
+    
+```{r}
+# The errors vector has already been defined for you
+errors <- c(1.9, -2.6, 4.0, -9.5, -3.4, 7.3)
+
+# Sum of absolute rounded values of errors
+sum(abs(round(errors)))
+```
+
+## Find the error
+
+```{r}
+# Don't edit these two lines
+vec1 <- c(1.5, 2.5, 8.4, 3.7, 6.3)
+vec2 <- rev(vec1)
+
+# Fix the error
+# mean(abs(vec1), abs(vec2))
+mean(c(abs(vec1), abs(vec2)))
+```
+
+## Data Utilities
+
+* seq(): Generate sequences, by specifying the from, to, and by arguments.
+* rep(): Replicate elements of vectors and lists.
+* sort(): Sort a vector in ascending order. Works on numerics, but also on character strings and logicals.
+* rev(): Reverse the elements in a data structures for which reversal is defined.
+* str(): Display the structure of any R object.
+* append(): Merge vectors or lists.
+* is.*(): Check for the class of an R object.
+* as.*(): Convert an R object from one class to another.
+* unlist(): Flatten (possibly embedded) lists to produce a vector.
+
+```{r}
+# The linkedin and facebook lists have already been created for you
+linkedin <- list(16, 9, 13, 5, 2, 17, 14)
+facebook <- list(17, 7, 5, 16, 8, 13, 14)
+
+# Convert linkedin and facebook to a vector: li_vec and fb_vec
+li_vec <- unlist(linkedin)
+fb_vec <- unlist(facebook)
+
+# Append fb_vec to li_vec: social_vec
+social_vec <- append(li_vec, fb_vec)
+
+# Sort social_vec
+sort(social_vec, decreasing = TRUE)
+```
+
+## FInd the error (2)
+
+```{r}
+# Fix me
+# seq(rep(1, 7, by = 2), times = 7)
+rep(seq(1, 7, by = 2), times = 7)
+```
+
+## Beat Gauss using R
+
+```{r}
+# Create first sequence: seq1
+seq1 <- seq(1, 500, by = 3)
+
+# Create second sequence: seq2
+seq2 <- seq(1200, 900, by = -7)
+
+# Calculate total sum of the sequences
+sum(seq1, seq2)
+```
+
+# Regular Expressions
+
+## grepl & grep
+
+* grepl(), which returns TRUE when a pattern is found in the corresponding character string.
+* grep(), which returns a vector of indices of the character strings that contains the pattern.
+
+```{r}
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "dalai.lama@peace.org",
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use grepl() to match for "edu"
+grepl("edu", emails)
+
+# Use grep() to match for "edu", save result to hits
+hits <- grep("edu", emails)
+
+# Subset emails using hits
+emails[hits]
+```
+
+## grepl & grep (2)
+
+```{r}
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "dalai.lama@peace.org",
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use grepl() to match for .edu addresses more robustly
+grepl("@.*\\.edu$", emails)
+
+# Use grep() to match for .edu addresses more robustly, save result to hits
+hits <- grep("@.*\\.edu$", emails)
+
+# Subset emails using hits
+emails[hits]
+```
+
+## sub & gsub
+
+```{r}
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "global@peace.org",
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use sub() to convert the email domains to datacamp.edu
+sub("@.*\\.edu$", "@datacamp.edu", emails)
+```
+
+# Times and Dates
+
+## Right here, right now
+
+```{r}
+# Get the current date: today
+today <- Sys.Date()
+
+# See what today looks like under the hood
+unclass(today)
+
+# Get the current time: now
+now <- Sys.time()
+
+# See what now looks like under the hood
+unclass(now)
+```
+
+## Create and format dates
+
+* %Y: 4-digit year (1982)
+* %y: 2-digit year (82)
+* %m: 2-digit month (01)
+* %d: 2-digit day of the month (13)
+* %A: weekday (Wednesday)
+* %a: abbreviated weekday (Wed)
+* %B: month (January)
+* %b: abbreviated month (Jan)
+
+```{r}
+# Instructions
+# In the editor on the right, three character strings representing dates have been created. Convert them to dates using as.Date(), and assign them to date1, date2, and date3 respectively. The code for date1 is already included.
+# Extract useful information from the dates as character strings using format(). From the first date, select the weekday. From the second date, select the day of the month. From the third date, you should select the abbreviated month and the 4-digit year, separated by a space.
+
+# Definition of character strings representing dates
+str1 <- "May 23, '96"
+str2 <- "2012-03-15"
+str3 <- "30/January/2006"
+
+# Convert the strings to dates: date1, date2, date3
+date1 <- as.Date(str1, format = "%b %d, '%y")
+date2 <- as.Date(str2, format = "%Y-%m-%d")
+date3 <- as.Date(str3, format = "%d/%B/%Y")
+
+# Convert dates to formatted strings
+format(date1, "%A")
+format(date2, "%d")
+format(date3, "%b %Y")
+
+```
+
+## Create and format times
+
+* %H: hours as a decimal number (00-23)
+* %I: hours as a decimal number (01-12)
+* %M: minutes as a decimal number
+* %S: seconds as a decimal number
+* %T: shorthand notation for the typical format %H:%M:%S
+* %p: AM/PM indicator
+
+Instructions
+* Convert two strings that represent timestamps, str1 and str2, to POSIXct objects called time1 and time2.
+* Using format(), create a string from time1 containing only the minutes.
+* From time2, extract the hours and minutes as "hours:minutes AM/PM". Refer to the assignment text above to find the correct conversion symbols!
+
+```{r}
+# Definition of character strings representing times
+str1 <- "May 23, '96 hours:23 minutes:01 seconds:45"
+str2 <- "2012-3-12 14:23:08"
+
+# Convert the strings to POSIXct objects: time1, time2
+time1 <- as.POSIXct(str1, format = "%B %d, '%y hours:%H minutes:%M seconds:%S")
+time2 <- as.POSIXct(str2, format = "%Y-%m-%d %H:%M:%S")
+
+# Convert times to formatted strings
+format(time1, "%M")
+format(time2, "%I:%M %p")
+
+```
+
+## Calculations with Dates
+
+
+
+```{r}
+day1 <- as.Date("2017-12-29")
+day2 <- as.Date("2017-12-31")
+day3 <- as.Date("2018-01-05")
+day4 <- as.Date("2018-01-11")
+day5 <- as.Date("2018-01-16")
+
+# day1, day2, day3, day4 and day5 are already available in the workspace
+
+# Difference between last and first pizza day
+day5 - day1
+
+# Create vector pizza
+pizza <- c(day1, day2, day3, day4, day5)
+
+# Create differences between consecutive pizza days: day_diff
+day_diff <- diff(pizza)
+
+# Average period between two consecutive pizza days
+mean(day_diff)
+```
+
+## Calculation with Times
+
+```{r}
+login <- as.POSIXct(c("2018-01-02 10:18:04 UTC", "2018-01-07 09:14:18 UTC",
+           "2018-01-07 12:21:51 UTC", "2018-01-07 12:37:24 UTC",
+           "2018-01-09 21:37:55 UTC"), format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+
+logout <- as.POSIXct(c("2018-01-02 10:56:29 UTC", "2018-01-07 09:14:52 UTC",
+                       "2018-01-07 12:35:48 UTC", "2018-01-07 13:17:22 UTC",
+                       "2018-01-09 22:08:47 UTC"), format = "%Y-%m-%d %H:%M:%S", tz = "UTC")
+
+# login and logout are already defined in the workspace
+# Calculate the difference between login and logout: time_online
+time_online <- logout - login
+print(time_online)
+
+# Inspect the variable time_online
+class(time_online)
+
+# Calculate the total time online
+sum(time_online)
+
+# Calculate the average time online
+mean(time_online)
+```
+
+## Time is the essence
+
+```{r}
+astro <- c(spring = "20-Mar-2015", summer = "25-Jun-2015",
+           fall = "23-Sep-2015", winter = "22-Dec-2015")
+
+meteo <- c(spring = "March 1, 15", summer = "June 1, 15",
+           fall = "September 1, 15", winter = "December 1, 15")
+
+# Convert astro to vector of Date objects: astro_dates
+astro_dates <- as.Date(astro, format = "%d-%b-%Y")
+
+# Convert meteo to vector of Date objects: meteo_dates
+meteo_dates <- as.Date(meteo, format = "%B %d, %y")
+
+# Calculate the maximum absolute difference between astro_dates and meteo_dates
+max(abs(astro_dates - meteo_dates))
+
+```
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

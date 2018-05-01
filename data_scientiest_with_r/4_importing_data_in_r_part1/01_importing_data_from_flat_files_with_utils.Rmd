@@ -1,0 +1,113 @@
+---
+title: "Importing data from flat files with utils"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+## read.csv
+
+```{r}
+# Import swimming_pools.csv: pools
+pools <- read.csv("swimming_pools.csv")
+
+# Print the structure of pools
+str(pools)
+```
+
+## stringsAsFactors
+
+```{r}
+# Import swimming_pools.csv correctly: pools
+pools <- read.csv("swimming_pools.csv", stringsAsFactors = FALSE)
+
+# Check the structure of pools
+str(pools)
+```
+
+## read.delim
+
+```{r}
+# Import hotdogs.txt: hotdogs
+hotdogs <- read.delim("hotdogs.txt", header = FALSE)
+
+# Summarize hotdogs
+summary(hotdogs)
+```
+
+## read.table
+
+```{r}
+# Path to the hotdogs.txt file: path
+path <- file.path("hotdogs.txt")
+
+# Import the hotdogs.txt file: hotdogs
+hotdogs <- read.table(path, 
+                      sep = "\t", 
+                      col.names = c("type", "calories", "sodium"))
+
+# Call head() on hotdogs
+head(hotdogs)
+```
+
+## Arguments
+
+```{r}
+# Finish the read.delim() call
+hotdogs <- read.delim("hotdogs.txt", header = FALSE, col.names = c("type", "calories", "sodium"))
+
+# Select the hot dog with the least calories: lily
+lily <- hotdogs[which.min(hotdogs$calories), ]
+
+# Select the observation with the most sodium: tom
+tom <- hotdogs[which.max(hotdogs$sodium), ]
+
+# Print lily and tom
+lily
+tom
+
+```
+
+## Column classes
+
+```{r}
+# Previous call to import hotdogs.txt
+hotdogs <- read.delim("hotdogs.txt", header = FALSE, col.names = c("type", "calories", "sodium"))
+
+# Display structure of hotdogs
+str(hotdogs)
+
+# Edit the colClasses argument to import the data correctly: hotdogs2
+hotdogs2 <- read.delim("hotdogs.txt", header = FALSE, 
+                       col.names = c("type", "calories", "sodium"),
+                       colClasses = c("factor", "NULL", "numeric"))
+
+
+# Display structure of hotdogs2
+str(hotdogs2)
+```
+
+## 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

@@ -1,0 +1,152 @@
+---
+title: "The apply family"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+## lapply refresher
+
+```{r}
+# logs is available in your workspace
+
+# Call length() on each element of logs
+lapply(logs, length)
+
+# Call class() on each element of logs
+lapply(logs, class)
+```
+
+## lapply on logs (1)
+
+```{r}
+# logs is available in your workspace
+
+# Define get_timestamp()
+get_timestamp <- function(x) {
+  return(x$timestamp)
+}
+
+# Apply get_timestamp() over all elements in logs
+lapply(logs, get_timestamp)
+```
+
+## lapply on logs (2)
+
+```{r}
+# logs is available in your workspace
+
+# get_timestamp <- function(x) {
+#   x$timestamp
+# }
+
+# Have lapply() use an anonymous function
+lapply(logs, function(x) {x$timestamp})
+```
+
+## lapply on logs (3)
+
+```{r}
+# logs is available in your workspace
+
+# Replace the anonymous function with `[[` 
+lapply(logs, `[[`, "timestamp")
+```
+
+## sapply refresher
+
+```{r}
+# logs is available in your workspace
+
+# Call length() on each element of logs using sapply()
+sapply(logs, length)
+
+# Definition of get_timestamp
+get_timestamp <- function(x) {
+  x$timestamp
+}
+
+# Get vector of log entries' timestamps
+sapply(logs, get_timestamp)
+```
+
+## sapply on logs (1)
+
+```{r}
+# logs is available in your workspace
+
+# Use sapply() to select the success element from each log: results
+results <- sapply(logs, `[[`, "success")
+
+# Call mean() on results
+mean(results)
+
+# Use sapply() to select the details element from each log
+sapply(logs, `[[`, "details")
+```
+
+## sapply on logs (2)
+
+```{r}
+# logs is available in your workspace
+
+# Implement function get_failure_loc
+get_failure_loc <- function(x) {
+  if (x$success) {
+    return(NULL)
+  } else {
+    return(x$details$location)
+  }
+}
+
+# Use sapply() to call get_failure_loc on logs
+sapply(logs, get_failure_loc)
+```
+
+## vapply refresher
+
+```{r}
+# logs is available in your workspace
+
+# Convert the sapply call to vapply
+# sapply(logs, length)
+vapply(logs, length, integer(1))
+
+# Convert the sapply call to vapply
+# sapply(logs, `[[`, "success")
+vapply(logs, `[[`, "success", FUN.VALUE = logical(1))
+```
+
+## vapply on logs (1)
+
+```{r}
+# logs is available in your workspace
+
+# Convert the sapply() call to a vapply() or lapply() call
+# sapply(logs, `[[`, c("details", "message"))
+vapply(logs, `[[`, c("details", "message"), FUN.VALUE = character(1))
+lapply(logs, `[[`, c("details", "message"))
+# Convert the sapply() call to a vapply() or lapply() call
+# sapply(logs, function(x) { x$details })
+vapply(logs, function(x) {x$details}, FUN.VALUE = character(1))
+lapply(logs, function(x) {x$details})
+```
+
+## Loop it the way you want it
+
+```{r}
+# logs is available in your workspace
+
+# Return vector with uppercase version of message elements in log entries
+toupper(sapply(logs, `[[`, c("details", "message")))
+```
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
